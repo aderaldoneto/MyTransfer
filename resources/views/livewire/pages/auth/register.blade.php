@@ -16,7 +16,7 @@ new #[Layout('layouts.guest')] class extends Component
     public string $password_confirmation = '';
 
     public string $document = '';
-    public string $type = ''; 
+    public string $type = '';
 
     /**
      * Handle an incoming registration request.
@@ -41,75 +41,129 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <form wire:submit="register">
+<div class="flex justify-center">
+    <div class="w-full max-w-md">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="mb-8 text-center space-y-2">
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-50">
+                Criar sua conta
+            </h1>
+            <p class="text-sm text-slate-400">
+                Cadastre-se no MyTransfer para começar a enviar e receber transferências com segurança.
+            </p>
         </div>
 
-        <!-- Email -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-lg shadow-emerald-500/5">
+            <form wire:submit="register" class="space-y-5">
+                <!-- Nome -->
+                <div>
+                    <x-input-label for="name" :value="__('Nome completo')" class="text-slate-200" />
+                    <x-text-input
+                        wire:model="name"
+                        id="name"
+                        class="block mt-1 w-full bg-slate-950/70 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500"
+                        type="text"
+                        name="name"
+                        required
+                        autofocus
+                        autocomplete="name"
+                        placeholder="Seu nome completo"
+                    />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <x-input-label for="email" :value="__('E-mail')" class="text-slate-200" />
+                    <x-text-input
+                        wire:model="email"
+                        id="email"
+                        class="block mt-1 w-full bg-slate-950/70 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500"
+                        type="email"
+                        name="email"
+                        required
+                        autocomplete="username"
+                        placeholder="seuemail@exemplo.com"
+                    />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <!-- Senha -->
+                <div>
+                    <x-input-label for="password" :value="__('Senha')" class="text-slate-200" />
+                    <x-text-input
+                        wire:model="password"
+                        id="password"
+                        class="block mt-1 w-full bg-slate-950/70 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500"
+                        type="password"
+                        name="password"
+                        required
+                        autocomplete="new-password"
+                        placeholder="••••••••"
+                    />
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
+
+                <!-- Confirmar senha -->
+                <div>
+                    <x-input-label for="password_confirmation" :value="__('Confirmar senha')" class="text-slate-200" />
+                    <x-text-input
+                        wire:model="password_confirmation"
+                        id="password_confirmation"
+                        class="block mt-1 w-full bg-slate-950/70 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500"
+                        type="password"
+                        name="password_confirmation"
+                        required
+                        autocomplete="new-password"
+                        placeholder="Repita a senha"
+                    />
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                </div>
+
+                {{-- Tipo de cadastro --}}
+                <div>
+                    <x-input-label for="type" :value="__('Tipo de cadastro')" class="text-slate-200" />
+                    <select
+                        wire:model="type"
+                        id="type"
+                        name="type"
+                        class="block mt-1 w-full rounded-md bg-slate-950/70 border-slate-700 text-slate-100 text-sm focus:border-emerald-500 focus:ring-emerald-500"
+                    >
+                        <option value="">Selecione...</option>
+                        <option value="pessoa">Pessoa Física</option>
+                        <option value="empresa">Empresa (CNPJ)</option>
+                    </select>
+                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                </div>
+
+                {{-- CPF / CNPJ --}}
+                <div>
+                    <x-input-label for="document" :value="__('Documento (CPF/CNPJ)')" class="text-slate-200" />
+                    <x-text-input
+                        wire:model="document"
+                        id="document"
+                        class="block mt-1 w-full bg-slate-950/70 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500"
+                        type="text"
+                        name="document"
+                        placeholder="Apenas números"
+                    />
+                    <x-input-error :messages="$errors->get('document')" class="mt-2" />
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <a
+                        class="text-xs text-slate-400 hover:text-emerald-300 underline-offset-2 hover:underline"
+                        href="{{ route('login') }}"
+                        wire:navigate
+                    >
+                        {{ __('Já tem conta? Entrar') }}
+                    </a>
+
+                    <x-primary-button class="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                        {{ __('Criar conta') }}
+                    </x-primary-button>
+                </div>
+            </form>
         </div>
-
-        <!-- Tipo (Pessoa/Empresa) -->
-        <div class="mt-4">
-            <x-input-label for="type" :value="__('Tipo de Cadastro')" />
-
-            <select wire:model="type" id="type"
-                class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                <option value="">Selecione...</option>
-                <option value="pessoa">Pessoa Física</option>
-                <option value="empresa">Empresa (CNPJ)</option>
-            </select>
-
-            <x-input-error :messages="$errors->get('type')" class="mt-2" />
-        </div>
-
-        <!-- Document (CPF/CNPJ) -->
-        <div class="mt-4">
-            <x-input-label for="document" :value="__('Documento (CPF/CNPJ)')" />
-            <x-text-input wire:model="document" id="document" class="block mt-1 w-full" type="text" />
-            <x-input-error :messages="$errors->get('document')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                type="password" autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation"
-                id="password_confirmation" class="block mt-1 w-full"
-                type="password" autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md"
-                href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </div>
-
