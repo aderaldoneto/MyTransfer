@@ -5,13 +5,17 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +24,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'document',
         'email',
         'password',
+        'type',
+        'created_by',
     ];
 
     /**
@@ -47,4 +54,34 @@ class User extends Authenticatable
             'type' => UserType::class,
         ];
     }
+
+    public function balance(): HasOne
+    {
+        return $this->hasOne(Balance::class);
+    }
+
+    public function sentTransactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'sender_id');
+    }
+
+    public function receivedTransactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'receiver_id');
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function getTypeLabelAttribute(): string
+    {
+        return match ($this->type) {
+            UserType::PESSOA => 'Pessoa física',
+            UserType::EMPRESA => 'Empresa',
+        };
+    }
+
+
 }
