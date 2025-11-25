@@ -105,6 +105,12 @@ class TransferService
         $data = $response->json();
         \Log::info('Retorno do externo: ', $data);
 
+        // O mock geralmente retorna algo como { "data": { "authorization": true } }
+        $authorized = data_get($data, 'data.authorization') ?? data_get($data, 'authorization');
+
+        if (! $authorized) {
+            throw new RuntimeException('Transação não autorizada pelo serviço externo!');
+        }
     }
 
     protected function notifyReceiver(Transaction $transaction, User $receiver): void

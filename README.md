@@ -20,5 +20,6 @@ Transactions
 remetente_id  
 destinatario_id  
 valor  
-status  (enum:)
+type (enums)
+status  (enums)
 created_at / updated_at  
