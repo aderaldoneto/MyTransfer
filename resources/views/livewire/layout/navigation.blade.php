@@ -5,9 +5,7 @@ use Livewire\Volt\Component;
 
 new class extends Component
 {
-    /**
-     * Log the current user out of the application.
-     */
+
     public function logout(Logout $logout): void
     {
         $logout();
@@ -18,12 +16,12 @@ new class extends Component
 ?>
 
 <nav x-data="{ open: false }" class="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
-    <!-- Navegação principal -->
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
 
             <div class="flex items-center">
-                <!-- Logo -->
+
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2">
                         <div class="h-9 w-9 rounded-xl bg-emerald-400/10 border border-emerald-500/40 flex items-center justify-center">
@@ -36,7 +34,7 @@ new class extends Component
                     </a>
                 </div>
 
-                <!-- Links de navegação -->
+
                 <div class="hidden sm:-my-px sm:ms-10 sm:flex sm:items-center sm:space-x-6">
                     <x-nav-link
                         :href="route('dashboard')"
@@ -49,7 +47,7 @@ new class extends Component
                 </div>
             </div>
 
-            <!-- Dropdown de usuário (desktop) -->
+
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -92,7 +90,7 @@ new class extends Component
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <!-- Autenticação -->
+
                         <button wire:click="logout" class="w-full text-start">
                             <x-dropdown-link>
                                 {{ __('Log Out') }}
@@ -102,7 +100,7 @@ new class extends Component
                 </x-dropdown>
             </div>
 
-            <!-- Botão hamburguer (mobile) -->
+
             <div class="-me-2 flex items-center sm:hidden">
                 <button
                     @click="open = ! open"
@@ -131,7 +129,7 @@ new class extends Component
         </div>
     </div>
 
-    <!-- Navegação responsiva (mobile) -->
+
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-slate-800 bg-slate-950/95">
         <div class="pt-3 pb-2 space-y-1">
             <x-responsive-nav-link
@@ -144,7 +142,7 @@ new class extends Component
             </x-responsive-nav-link>
         </div>
 
-        <!-- Opções de usuário (mobile) -->
+
         <div class="pt-3 pb-4 border-t border-slate-800">
             <div class="px-4">
                 <div
@@ -163,7 +161,7 @@ new class extends Component
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <!-- Autenticação -->
+
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link>
                         {{ __('Log Out') }}

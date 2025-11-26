@@ -18,9 +18,7 @@ new #[Layout('layouts.guest')] class extends Component
     public string $document = '';
     public string $type = '';
 
-    /**
-     * Handle an incoming registration request.
-     */
+
     public function register(): void
     {
         $validated = $this->validate([
