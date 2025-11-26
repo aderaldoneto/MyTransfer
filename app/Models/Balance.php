@@ -20,9 +20,15 @@ class Balance extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getFormattedAttribute(): string
+    public function getFormattedAmountAttribute(): string 
     {
         return 'R$ ' . number_format($this->amount / 100, 2, ',', '.');
     }
+
+    public function getBalanceProperty()
+    {
+        return Balance::where('user_id', $this->user->id)->value('amount') ?? 0;
+    }
+
 
 }
