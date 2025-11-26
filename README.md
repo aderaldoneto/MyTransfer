@@ -35,8 +35,8 @@ timestamps
 
 ## Instalação e Execução
 
-git clone ...  
-cd ... 
+git clone git@github.com:aderaldoneto/MyTransfer.git  
+cd MyTransfer  
 cp .env.example .env  
 sail up -d  
 sail composer install  
