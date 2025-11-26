@@ -57,6 +57,6 @@ Senha: password
 sail php artisan test  
 
 # Rodar meus testes 
-sail php artisan test --filter=UserTest 
-sail php artisan test --filter=BalanceTest 
-sail php artisan test --filter=TransactionTest 
+sail php artisan test --filter=UserTest  
+sail php artisan test --filter=BalanceTest  
+sail php artisan test --filter=TransactionTest  
